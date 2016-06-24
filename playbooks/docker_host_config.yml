@@ -9,5 +9,9 @@
       lineinfile: dest=/etc/sysconfig/docker-network regexp=^DOCKER_NETWORK_OPTIONS= line=DOCKER_NETWORK_OPTIONS="-H tcp://0.0.0.0:2376 -H unix:///var/run/docker.sock"
       when: port_listening.stdout != ""
       notify:
-      - restart named
+      - restart docker
+      
+  handlers:
+    - name: restart docker
+      service: name=docker state=restarted
 
