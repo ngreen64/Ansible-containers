@@ -2,7 +2,7 @@
 - hosts: vCPE-hosts
   tasks:
     - name: Test for docker listening on port 2376
-      shell: grep "0.0.0.0:2376" /database.properties
+      shell: grep "0.0.0.0:2376" /etc/sysconfig/docker-network
       register: port_listening
       
     - name: Docker must listen on TCP port 2376
