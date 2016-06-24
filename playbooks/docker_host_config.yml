@@ -1,0 +1,8 @@
+---
+- hosts: vCPE hosts
+  tasks:
+    - name: Docker must listen on TCP port 2376
+      lineinfile: dest=/etc/selinux/config regexp=^DOCKER_NETWORK_OPTIONS= line=DOCKER_NETWORK_OPTIONS="-H tcp://0.0.0.0:2376 -H unix:///var/run/docker.sock"
+      notify:
+      - restart named
+
