@@ -1,0 +1,5 @@
+---
+- hosts: vCPE-hosts
+  tasks:
+    - name: Ensure that docker is installed
+      yum: state=latest name=docker
