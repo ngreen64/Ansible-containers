@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: Location-B
   tasks:
     - hostname: name={{ inventory_hostname }}
       tags:
