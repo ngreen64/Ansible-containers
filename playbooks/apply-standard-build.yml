@@ -39,6 +39,7 @@
       - nm-connection-editor
       - libsemanage-python
       - policycoreutils-python
+      - python27-python-pip
       tags:
       - packages
     - service: name=chronyd state=started enabled=yes
