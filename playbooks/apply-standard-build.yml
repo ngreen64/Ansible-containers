@@ -10,14 +10,13 @@
     - shell: /usr/sbin/subscription-manager clean
       tags:
       - subscription
-    - redhat_subscription: 
-      state=present
-      activationkey=Employee_SKU_virt
-      org_id=7847483
-      pool='^Red Hat Enterprise Server$'
-      autosubscribe=yes
-      tags:
-      - subscription
+    - redhat_subscription: state=present
+        activationkey=Employee_SKU_virt
+        org_id=7847483
+        pool='^Red Hat Enterprise Server$'
+        autosubscribe=yes
+        tags:
+        - subscription
     - shell: /usr/sbin/subscription-manager repos --disable=*
       tags:
       - subscription
