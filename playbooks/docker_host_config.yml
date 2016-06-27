@@ -12,8 +12,8 @@
       notify:
       - restart docker
       
-    - firewalld: port=2376/tcp permanent=true state=enabled immediate
-      
+    - firewalld: port=2376/tcp permanent=true state=enabled
+
   handlers:
     - name: restart docker
       service: name=docker state=restarted
