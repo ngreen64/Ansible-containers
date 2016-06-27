@@ -12,6 +12,9 @@
       notify:
       - restart docker
       
+    - name: Firewalld must be open for Docker traffic
+      firewalld: port=2376/tcp permanent=true state=enabled immediate
+      
   handlers:
     - name: restart docker
       service: name=docker state=restarted
