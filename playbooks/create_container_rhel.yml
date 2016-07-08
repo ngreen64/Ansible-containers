@@ -6,5 +6,5 @@
       register: contlist
       
     - debug:
-        msg: echo {{ item }}
+        msg="{{ item }}"
       with_items: contlist.stdout_lines
