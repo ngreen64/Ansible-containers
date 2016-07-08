@@ -5,6 +5,6 @@
       shell: cat /root/list_of_containers.txt
       register: contlist
       
-    - name: echo out what we read from the file
-      msg: echo {{ item }}
+    - debug:
+        msg: echo {{ item }}
       with_items: contlist.stdout_lines
