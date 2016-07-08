@@ -6,5 +6,5 @@
       register: contlist
       
     - name: Create containers and start httpd
-      shell: docker run --rm --name {{ item.split(',')[0] }} -v /root/{{ item.split(',')[0] }}:/var/www/html -p {{ item.split(',')[1] }}:80 rhel-apache /usr/sbin/apachectl -D FOREGROUND
+      shell: docker run -d --rm --name {{ item.split(',')[0] }} -v /root/{{ item.split(',')[0] }}:/var/www/html -p {{ item.split(',')[1] }}:80 rhel-apache /usr/sbin/apachectl -D FOREGROUND
       with_items: contlist.stdout
