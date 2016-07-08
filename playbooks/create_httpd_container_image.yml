@@ -8,7 +8,7 @@
         interactive: yes
         tty: yes
         log_driver: journald
-        command: /usr/bin/yum -y install httpd
+        command: sleep 3600
     
     - name: Commit the rhel_httpd container to a docker image
       shell: docker commit rhel_httpd rhel-apache
