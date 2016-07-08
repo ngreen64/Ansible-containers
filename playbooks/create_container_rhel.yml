@@ -5,7 +5,7 @@
       shell: cat /root/list_of_containers.txt
       register: contlist
       
-    - name: Echo the name of the containers in the list
+    - name: Create containers and change contents
       shell: docker run --name {{ item.split(',')[0] }} rhel-apache "echo {{ item.split(',')[0] }} > /var/www/html/index.html"
       with_items: contlist.stdout_lines
       
