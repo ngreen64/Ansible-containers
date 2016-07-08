@@ -14,7 +14,5 @@
       with_items: contlist.stdout_lines
       
     - name: Remove the rhel_httpd container that was used to create the image
-      docker_container:
-        name: {{ item.split(',')[0] }}
-        state: absent
+      shell: docker rm {{ item.split(',')[0] }}
       with_items: contlist.stdout_lines
