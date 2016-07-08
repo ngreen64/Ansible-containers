@@ -5,14 +5,6 @@
       shell: cat /root/list_of_containers.txt
       register: contlist
       
-    - name: Create containers and change contents
-      shell: docker run --name {{ item.split(',')[0] }} rhel-apache "echo {{ item.split(',')[0] }} > /var/www/html/index.html"
-      with_items: contlist.stdout_lines
-      
-    - name: Commit the rhel_httpd container to a docker image
-      shell: docker commit {{ item.split(',')[0] }} {{ item.split(',')[0] }}
-      with_items: contlist.stdout_lines
-      
-    - name: Remove the rhel_httpd container that was used to create the image
-      shell: docker rm {{ item.split(',')[0] }}
-      with_items: contlist.stdout_lines
+    - name: Create containers and start httpd
+      shell: docker run --rm --name {{ item.split(',')[0] }} -v /root/{{ item.split(',')[0] }}:/var/www/html -p {{ item.split(',')[1] }}:80 rhel-apache /usr/sbin/apache2ctl -D FOREGROUND
+      with_items: contlist.stdout
