@@ -1,1 +1,16 @@
-
+---
+- hosts: Location-B
+  tasks:
+    - name: Start a container based on RHEL and install httpd
+      docker_container:
+        name: rhel_httpd
+        image: rhel
+        command: yum -y install httpd
+    
+    - name: Commit the rhel_httpd container to a docker image
+      shell: docker commit rhel_httpd rhel-apache
+      
+    - name: Remove the rhel_httpd container that was used to create the image
+      docker_container:
+      name: rhel_httpd
+      state: absent
