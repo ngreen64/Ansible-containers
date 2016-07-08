@@ -6,5 +6,5 @@
       register: contlist
       
     - name: echo out what we read from the file
-      shell: echo {{ item }}
+      msg: echo {{ item }}
       with_items: contlist.stdout_lines
