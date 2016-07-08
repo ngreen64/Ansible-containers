@@ -1,8 +1,10 @@
 ---
 - hosts: Location-B
   tasks:
-    - name: Start a container with a command
-      docker_container:
-        name: sleepy
-        image: rhel
-        command: bash
+    - name: Get a list of containers from the file in the host
+      shell: cat /root/list_of_containers.txt
+      register: contlist
+      
+    - name: echo out what we read from the file
+      shell: echo {{ item }}
+      with_items: contlist.stdout_lines
