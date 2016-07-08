@@ -4,5 +4,5 @@
     - name: Start a container with a command
       docker_container:
         name: sleepy
-        image: ubuntu:14.04
+        image: rhel
         command: sleep 3600
