@@ -12,5 +12,5 @@
       
     - name: Remove the rhel_httpd container that was used to create the image
       docker_container:
-      name: rhel_httpd
-      state: absent
+        name: rhel_httpd
+        state: absent
