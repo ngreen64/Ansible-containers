@@ -1,18 +1,18 @@
 ---
 - hosts: all
   tasks:
-    - name: Test for docker listening on port 2376
-      shell: grep "0.0.0.0:2376" /etc/sysconfig/docker-network
+    - name: Test for docker listening on port 2375
+      shell: grep "0.0.0.0:2375" /etc/sysconfig/docker-network
       ignore_errors: yes
       register: port_listening
       
-    - name: Docker must listen on TCP port 2376
-      lineinfile: dest=/etc/sysconfig/docker-network regexp=^DOCKER_NETWORK_OPTIONS= line=DOCKER_NETWORK_OPTIONS="-H tcp://0.0.0.0:2376 -H unix:///var/run/docker.sock"
+    - name: Docker must listen on TCP port 2375
+      lineinfile: dest=/etc/sysconfig/docker-network regexp=^DOCKER_NETWORK_OPTIONS= line=DOCKER_NETWORK_OPTIONS="-H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock"
       when: port_listening|failed
       notify:
       - restart docker
       
-    - firewalld: port=2376/tcp permanent=true state=enabled immediate=yes
+    - firewalld: port=2375/tcp permanent=true state=enabled immediate=yes
 
   handlers:
     - name: restart docker
