@@ -10,9 +10,13 @@
       with_items: contlist.stdout_lines
       
     - name: Create content files in /var/apache for each container
-      shell: echo "Welcome to server {{ item.split(',')[0] }}" > /var/apache/{{ item.split(',')[0] }}
+      file: path=/var/apache/{{ item.split(',')[0] }} state=directory mode=0755
+      with_items: contlist.stdout_lines
+        
+    - name: Create content files in /var/apache for each container
+      shell: echo "Welcome to server {{ item.split(',')[0] }}" > /var/apache/{{ item.split(',')[0] }}/index.html
       with_items: contlist.stdout_lines
       
     - name: Ensure that the SELinux context is set correctly on the container bind mounts
-      shell: /usr/bin/chcon -Rt svirt_sandbox_file_t /var/apache/{{ item.split(',')[0] }}
-      with_items: contlist.stdout_lines
+      shell: /usr/bin/chcon -Rt svirt_sandbox_file_t /var/apache/
+
