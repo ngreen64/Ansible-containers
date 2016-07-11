@@ -8,7 +8,7 @@
     - name: Create containers and start httpd in each of them
       shell: docker run -d --name {{ item.split(',')[0] }} -v /var/apache/{{ item.split(',')[0] }}/:/var/www/html/ -p {{ item.split(',')[1] }}:80 rhel-apache /usr/sbin/apachectl -D FOREGROUND
       with_items: contlist.stdout_lines
-      Ignore_Errors: True
+      ignore_errors: True
       
     - name: Create content files in /var/apache for each container
       file: path=/var/apache/{{ item.split(',')[0] }} state=directory mode=0755
