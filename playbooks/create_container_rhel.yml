@@ -15,7 +15,7 @@
       shell: docker start -d --name {{ item.split(',')[0] }}
       with_items: containers_existing.results
       ignore_errors: True
-    - when:
+      when:
       - not item | skipped
       - item.stat.exists == false
       
