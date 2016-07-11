@@ -15,7 +15,7 @@
     - firewalld: port=2375/tcp permanent=true state=enabled immediate=yes
     
     - file: path=/var/apache state=directory mode=0755
-    - shell: chcon -Rt ansible chcon /var/apache
+    - shell: chcon -Rt svirt_sandbox_file_t /var/apache
     
   handlers:
     - name: restart docker
