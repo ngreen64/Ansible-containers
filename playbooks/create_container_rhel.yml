@@ -5,6 +5,14 @@
       shell: cat /root/list_of_containers.txt
       register: contlist
       
-    - name: Create containers and start httpd
+    - name: Create containers and start httpd in each of them
       shell: docker run -d --name {{ item.split(',')[0] }} -v /var/apache/{{ item.split(',')[0] }}/:/var/www/html/ -p {{ item.split(',')[1] }}:80 rhel-apache /usr/sbin/apachectl -D FOREGROUND
+      with_items: contlist.stdout_lines
+      
+    - name: Create content files in /var/apache for each container
+      shell: echo "Welcome to server {{ item.split(',')[0] }}" > /var/apache/{{ item.split(',')[0] }}
+      with_items: contlist.stdout_lines
+      
+    - name: Ensure that the SELinux context is set correctly on the container bind mounts
+      shell: /usr/bin/chcon -Rt svirt_sandbox_file_t /var/apache/{{ item.split(',')[0] }}
       with_items: contlist.stdout_lines
