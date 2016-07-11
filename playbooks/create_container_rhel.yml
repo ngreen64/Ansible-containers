@@ -9,6 +9,15 @@
       shell: docker run -d --name {{ item.split(',')[0] }} -v /var/apache/{{ item.split(',')[0] }}/:/var/www/html/ -p {{ item.split(',')[1] }}:80 rhel-apache /usr/sbin/apachectl -D FOREGROUND
       with_items: contlist.stdout_lines
       ignore_errors: True
+      register: containers_existing
+      
+    - name: Start containers that could not be created new
+      shell: docker start -d --name {{ item.split(',')[0] }}
+      with_items: containers_existing.results
+      ignore_errors: True
+    - when:
+      - not item | skipped
+      - item.stat.exists == false
       
     - name: Create content files in /var/apache for each container
       file: path=/var/apache/{{ item.split(',')[0] }} state=directory mode=0755
