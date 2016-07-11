@@ -13,8 +13,11 @@
       - restart docker
       
     - firewalld: port=2375/tcp permanent=true state=enabled immediate=yes
-
+    
+    - file: path=/var/apache state=directory mode=0755
+    
   handlers:
     - name: restart docker
       service: name=docker state=restarted enabled=yes
+    
 
