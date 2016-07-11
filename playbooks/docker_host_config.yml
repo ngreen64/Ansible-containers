@@ -15,6 +15,7 @@
     - firewalld: port=2375/tcp permanent=true state=enabled immediate=yes
     
     - file: path=/var/apache state=directory mode=0755
+    - shell: chcon -Rt ansible chcon /var/apache
     
   handlers:
     - name: restart docker
