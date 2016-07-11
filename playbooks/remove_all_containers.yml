@@ -1,0 +1,14 @@
+---
+- hosts: Location-B
+  tasks:
+    - name: Get a list of containers from the file in the host
+      shell: cat /root/list_of_containers.txt
+      register: contlist
+      
+    - name: Stop the containers listed in the file
+      shell: docker kill {{ item.split(',')[0] }}
+      with_items: contlist.stdout_lines
+      
+    - name: Remove the containers listed in the file
+      shell: docker rm {{ item.split(',')[0] }}
+      with_items: contlist.stdout_lines
