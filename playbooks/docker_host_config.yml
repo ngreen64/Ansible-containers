@@ -5,7 +5,7 @@
       shell: grep "0.0.0.0:2375" /etc/sysconfig/docker-network
       ignore_errors: yes
       register: port_listening
-      
+
     - name: Docker must listen on TCP port 2375
       lineinfile: dest=/etc/sysconfig/docker-network regexp=^DOCKER_NETWORK_OPTIONS= line=DOCKER_NETWORK_OPTIONS="-H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock"
       when: port_listening|failed
@@ -14,8 +14,15 @@
       
     - firewalld: port=2375/tcp permanent=true state=enabled immediate=yes
     
-    - file: path=/var/apache state=directory mode=0755
-    - shell: chcon -Rt svirt_sandbox_file_t /var/apache
+    - name: Create a /var/apache directory for hosting webdirs for containers
+      file: path=/var/apache state=directory mode=0755
+    
+    - name: Change the SELinux context for the /var/apache directory
+      shell: chcon -Rt svirt_sandbox_file_t /var/apache
+      
+    - name: Copy the docker systemd service file to /etc/systemd/system in order to allow changes
+      shell: cp /usr/lib/systemd/system/docker.service /etc/systemd/system/
+
     
   handlers:
     - name: restart docker
