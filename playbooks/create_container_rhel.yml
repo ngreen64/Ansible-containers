@@ -10,7 +10,6 @@
 #      with_items: contlist.stdout_lines
 #      ignore_errors: True
 
-      
 #    - name: Start containers that could not be created new
 #      shell: docker start -d --name {{ item.split(',')[0] }}
 #      with_items: contlist.stdout_lines
@@ -32,6 +31,7 @@
         name: "vCPE-container22"
         volumes: "/var/apache/vCPE-container22/:/var/www/html/"
         published_ports: "0.0.0.0:9022:80"
+        exposed_ports: 9022
         image: rhel-apache
         command: /usr/sbin/apachectl,-D,FOREGROUND
         state: started
