@@ -2,7 +2,7 @@
 - hosts: Location-B
   tasks:
     - name: Get a list of containers from the file in the host
-      shell: cat /root/list_of_containers.txt
+      shell: cat /var/list_of_containers.txt
       register: contlist
       
 #    - name: Create containers and start httpd in each of them
