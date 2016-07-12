@@ -19,7 +19,7 @@
 #      docker_container:
 #        name: "{{ item.split(',')[0] }}"
 #        devices: "/var/apache/{{ item.split(',')[0] }}/:/var/www/html/:rwm"
-#        published_ports: "{{ item.split(',')[1] }}:80"
+#        published_ports: "{{ item.split(',')[0] }}:80"
 #        image: rhel-apache
 #        command: /usr/sbin/apachectl -D FOREGROUND
 #        state: present
@@ -28,9 +28,9 @@
       
     - name: test
       docker_container:
-        name: "vCPE-container22"
-        volumes: "/var/apache/vCPE-container22/:/var/www/html/"
-        ports: "0.0.0.0:9022:80"
+        name: "{{ item.split(',')[0] }}"
+        volumes: "/var/apache/{{ item.split(',')[0] }}/:/var/www/html/"
+        ports: "0.0.0.0:{{ item.split(',')[0] }}:80"
         exposed_ports: 80
         image: rhel-apache
         command: /usr/sbin/apachectl,-D,FOREGROUND
@@ -38,10 +38,6 @@
       with_items: contlist.stdout_lines
       ignore_errors: True
       
-    - name: Create containers and start httpd in each of them
-      shell: docker run -d --name vCPE-container23 -v /var/apache/vCPE-container23/:/var/www/html/ -p 9023:80 rhel-apache /usr/sbin/apachectl -D FOREGROUND
-      ignore_errors: True
-
     - name: Create /var/apache subdirs for each container
       file: path=/var/apache/{{ item.split(',')[0] }} state=directory mode=0755
       with_items: contlist.stdout_lines
