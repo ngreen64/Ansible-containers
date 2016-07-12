@@ -17,7 +17,8 @@
       - restart docker
       
     - firewalld: port=2375/tcp permanent=true state=enabled immediate=yes
-    
+      ignore_errors: true
+
     - name: Create a /var/apache directory for hosting webdirs for containers
       file: path=/var/apache state=directory mode=0755
     
