@@ -39,10 +39,7 @@
       ignore_errors: True
       
     - name: test
-      docker_container:
-        name: "vCPE-container22"
-        state: started
-        
+      shell: docker start -d --name vCPE-container22
       
     - name: Create /var/apache subdirs for each container
       file: path=/var/apache/{{ item.split(',')[0] }} state=directory mode=0755
