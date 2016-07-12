@@ -30,18 +30,18 @@
     - name: test
       docker_container:
         name: "vCPE-container22"
-        volumes: "/var/apache/vCPE-container22/:/var/www/html/[:ro]"
+        volumes: "/var/apache/vCPE-container22/:/var/www/html/"
         published_ports: "9022:80"
         image: rhel-apache
         command: /usr/sbin/apachectl -D FOREGROUND
         state: present
       with_items: contlist.stdout_lines
       ignore_errors: True
-    - name: Create content files in /var/apache for each container
+    - name: Create /var/apache subdirs for each container
       file: path=/var/apache/{{ item.split(',')[0] }} state=directory mode=0755
       with_items: contlist.stdout_lines
         
-    - name: Create content files in /var/apache for each container
+    - name: Create index.html files in /var/apache for each container
       shell: echo "Welcome to server {{ item.split(',')[0] }}" > /var/apache/{{ item.split(',')[0] }}/index.html
       with_items: contlist.stdout_lines
       
