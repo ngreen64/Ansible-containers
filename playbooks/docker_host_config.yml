@@ -1,10 +1,7 @@
 ---
 - hosts: all
   tasks:
-    - name: Display all variables/facts known for a host
-      debug: var=hostvars[inventory_hostname] verbosity=4
-      
-    
+
     - name: Test for docker listening on port 2375
       shell: grep "0.0.0.0:2375" /etc/sysconfig/docker-network
       ignore_errors: yes
