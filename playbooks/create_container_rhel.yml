@@ -38,7 +38,7 @@
       with_items: contlist.stdout_lines
       ignore_errors: True
       
-      - name: test
+    - name: test
       docker_container:
         name: "vCPE-container22"
         state: started
