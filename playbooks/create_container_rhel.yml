@@ -33,7 +33,7 @@
         volumes: "/var/apache/vCPE-container22/:/var/www/html/"
         published_ports: "9022:80"
         image: rhel-apache
-        command: "/usr/sbin/apachectl -D FOREGROUND"
+        command: "/usr/sbin/apachectl" "-D" "FOREGROUND"
         state: present
       with_items: contlist.stdout_lines
       ignore_errors: True
