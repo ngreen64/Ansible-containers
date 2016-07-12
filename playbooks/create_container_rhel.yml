@@ -16,17 +16,27 @@
 #      with_items: contlist.stdout_lines
 #      ignore_errors: True
 
-    - name: Ensure that containers exist and are running httpd
+#    - name: Ensure that containers exist and are running httpd
+#      docker_container:
+#        name: "{{ item.split(',')[0] }}"
+#        devices: "/var/apache/{{ item.split(',')[0] }}/:/var/www/html/:rwm"
+#        published_ports: "{{ item.split(',')[1] }}:80"
+#        image: rhel-apache
+#        command: /usr/sbin/apachectl -D FOREGROUND
+#        state: present
+#      with_items: contlist.stdout_lines
+#      ignore_errors: True
+      
+    - name: test
       docker_container:
-        name: "{{ item.split(',')[0] }}"
-        devices: "/var/apache/{{ item.split(',')[0] }}/:/var/www/html/:rwm"
-        published_ports: "{{ item.split(',')[1] }}:80"
+        name: "vCPE-container22"
+        volumes: "/var/apache/vCPE-container22/:/var/www/html/[:ro]"
+        published_ports: "9022:80"
         image: rhel-apache
         command: /usr/sbin/apachectl -D FOREGROUND
         state: present
       with_items: contlist.stdout_lines
       ignore_errors: True
-      
     - name: Create content files in /var/apache for each container
       file: path=/var/apache/{{ item.split(',')[0] }} state=directory mode=0755
       with_items: contlist.stdout_lines
