@@ -5,27 +5,6 @@
       shell: cat /var/list_of_containers.txt
       register: contlist
       
-#    - name: Create containers and start httpd in each of them
-#      shell: docker run -d --name {{ item.split(',')[0] }} -v /var/apache/{{ item.split(',')[0] }}/:/var/www/html/ -p {{ item.split(',')[1] }}:80 rhel-apache /usr/sbin/apachectl -D FOREGROUND
-#      with_items: contlist.stdout_lines
-#      ignore_errors: True
-
-#    - name: Start containers that could not be created new
-#      shell: docker start -d --name {{ item.split(',')[0] }}
-#      with_items: contlist.stdout_lines
-#      ignore_errors: True
-
-#    - name: Ensure that containers exist and are running httpd
-#      docker_container:
-#        name: "{{ item.split(',')[0] }}"
-#        devices: "/var/apache/{{ item.split(',')[0] }}/:/var/www/html/:rwm"
-#        published_ports: "{{ item.split(',')[0] }}:80"
-#        image: rhel-apache
-#        command: /usr/sbin/apachectl -D FOREGROUND
-#        state: present
-#      with_items: contlist.stdout_lines
-#      ignore_errors: True
-      
     - name: Create or restart containers
       docker_container:
         name: "{{ item.split(',')[0] }}"
