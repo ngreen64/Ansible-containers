@@ -1,5 +1,5 @@
 ---
-- hosts: Location-B
+- hosts: all
   tasks:
     - name: Start a container based on RHEL and install httpd
       shell: docker run --name rhel_httpd rhel yum -y install httpd
