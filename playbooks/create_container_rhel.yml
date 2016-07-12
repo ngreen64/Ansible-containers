@@ -18,15 +18,14 @@
 
     - name: Ensure that containers exist and are running httpd
       docker_container:
-        name: {{ item.split(',')[0] }}
-        devices: /var/apache/{{ item.split(',')[0] }}/:/var/www/html/:rwm
-        published_ports: {{ item.split(',')[1] }}:80
+        name: "{{ item.split(',')[0] }}"
+        devices: "/var/apache/{{ item.split(',')[0] }}/:/var/www/html/:rwm"
+        published_ports: "{{ item.split(',')[1] }}:80"
         image: rhel-apache
         command: /usr/sbin/apachectl -D FOREGROUND
         state: present
       with_items: contlist.stdout_lines
       ignore_errors: True
-  
       
     - name: Create content files in /var/apache for each container
       file: path=/var/apache/{{ item.split(',')[0] }} state=directory mode=0755
@@ -38,4 +37,3 @@
       
     - name: Ensure that the SELinux context is set correctly on the container bind mounts
       shell: /usr/bin/chcon -Rt svirt_sandbox_file_t /var/apache/
-
