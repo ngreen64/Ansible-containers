@@ -1,5 +1,5 @@
 ---
-- hosts: Location-B
+- hosts: vCPE-service
   tasks:
     - name: Get a list of containers from the file in the host
       shell: cat /var/list_of_containers.txt
