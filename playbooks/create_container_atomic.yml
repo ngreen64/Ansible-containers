@@ -1,8 +1,0 @@
----
-- hosts: vCPE-hosts
-  tasks:
-    - name: Start a container with a command
-      docker_container:
-        name: sleepy
-        image: ubuntu:14.04
-        command: sleep infinity
