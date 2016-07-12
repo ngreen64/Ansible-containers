@@ -34,18 +34,14 @@
         published_ports: "9022:80"
         image: rhel-apache
         command: /usr/sbin/apachectl,-D,FOREGROUND
-        state: present
+        state: started
       with_items: contlist.stdout_lines
       ignore_errors: True
       
     - name: Create containers and start httpd in each of them
       shell: docker run -d --name vCPE-container23 -v /var/apache/vCPE-container23/:/var/www/html/ -p 9023:80 rhel-apache /usr/sbin/apachectl -D FOREGROUND
       ignore_errors: True
-      
-      
-    - name: test 2
-      shell: docker start vCPE-container22
-      
+
     - name: Create /var/apache subdirs for each container
       file: path=/var/apache/{{ item.split(',')[0] }} state=directory mode=0755
       with_items: contlist.stdout_lines
