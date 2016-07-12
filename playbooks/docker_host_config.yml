@@ -19,11 +19,7 @@
     
     - name: Change the SELinux context for the /var/apache directory
       shell: chcon -Rt svirt_sandbox_file_t /var/apache
-      
-    - name: Copy the docker systemd service file to /etc/systemd/system in order to allow changes
-      shell: cp /usr/lib/systemd/system/docker.service /etc/systemd/system/
 
-    
   handlers:
     - name: restart docker
       service: name=docker state=restarted enabled=yes
