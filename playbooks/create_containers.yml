@@ -12,7 +12,7 @@
         ports: 0.0.0.0:{{ item.split(',')[1] }}:80
         exposed_ports: 80
         image: rhel-apache
-        command: /usr/sbin/apachectl,-D,FOREGROUND
+        command: /usr/sbin/apachectl -D FOREGROUND
         state: started
       with_items: contlist.stdout_lines
       ignore_errors: True
