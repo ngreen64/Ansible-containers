@@ -1,0 +1,4 @@
+---
+- hosts: all
+  tasks:
+    - shell: send_an_email title message
